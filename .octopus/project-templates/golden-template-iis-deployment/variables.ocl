@@ -1,0 +1,3 @@
+variable "template.slack.url" {
+    value "https:\\\\slack.com\\workspace" {}
+}
