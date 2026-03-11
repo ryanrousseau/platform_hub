@@ -29,3 +29,11 @@ parameter "template.package" {
     help_text = ""
     label = "Package"
 }
+
+parameter "template.slot.name" {
+    display_settings = {
+        Octopus.ControlType = "SingleLineText"
+    }
+    help_text = ""
+    label = "Deployment slot"
+}
