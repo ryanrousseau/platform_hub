@@ -29,3 +29,11 @@ parameter "template.package.name" {
     help_text = ""
     label = "Package"
 }
+
+parameter "webapp.name" {
+    display_settings = {
+        Octopus.ControlType = "SingleLineText"
+    }
+    help_text = ""
+    label = "Web app name"
+}
