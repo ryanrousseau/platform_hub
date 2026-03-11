@@ -51,6 +51,7 @@ step "deploy-iis-web-site" {
             feed = "octopus-server-built-in"
             package_id = ""
             properties = {
+                PackageParameterName = "template.package.name"
                 SelectionMode = "deferred"
             }
         }
