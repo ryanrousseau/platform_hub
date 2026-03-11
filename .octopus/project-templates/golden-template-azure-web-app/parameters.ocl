@@ -1,0 +1,31 @@
+parameter "template.azure.account" {
+    display_settings = {
+        Octopus.ControlType = "AzureAccount"
+    }
+    help_text = ""
+    label = "Azure Account"
+}
+
+parameter "template.worker.pool" {
+    display_settings = {
+        Octopus.ControlType = "WorkerPool"
+    }
+    help_text = ""
+    label = "Worker pool"
+}
+
+parameter "template.target.tag" {
+    display_settings = {
+        Octopus.ControlType = "TargetTags"
+    }
+    help_text = ""
+    label = "Target tag"
+}
+
+parameter "template.package" {
+    display_settings = {
+        Octopus.ControlType = "Package"
+    }
+    help_text = ""
+    label = "Package"
+}
