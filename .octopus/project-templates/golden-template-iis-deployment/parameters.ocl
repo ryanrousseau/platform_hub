@@ -21,3 +21,11 @@ parameter "template.apppool.name" {
     help_text = ""
     label = "App pool"
 }
+
+parameter "template.package.name" {
+    display_settings = {
+        Octopus.ControlType = "Package"
+    }
+    help_text = ""
+    label = "Package"
+}
