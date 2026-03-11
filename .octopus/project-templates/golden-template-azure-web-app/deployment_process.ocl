@@ -13,6 +13,9 @@ step "manual-intervention-required" {
 
 step "run-bicep-template-provision" {
     name = "Run Bicep template - Provision"
+    properties = {
+        Octopus.Action.TargetRoles = "#{template.target.tag}"
+    }
 
     action {
         action_type = "Octopus.Script"
@@ -29,6 +32,9 @@ step "run-bicep-template-provision" {
 
 step "deploy-an-azure-app-service" {
     name = "Deploy an Azure App Service"
+    properties = {
+        Octopus.Action.TargetRoles = "#{template.target.tag}"
+    }
 
     action {
         action_type = "Octopus.AzureAppService"
@@ -37,11 +43,14 @@ step "deploy-an-azure-app-service" {
             Octopus.Action.EnabledFeatures = "Octopus.Features.ConfigurationVariables,Octopus.Features.JsonConfigurationVariables,Octopus.Features.ConfigurationTransforms,Octopus.Features.SubstituteInFiles"
             OctopusUseBundledTooling = "False"
         }
-        worker_pool_variable = ""
+        worker_pool_variable = "#{template.worker.pool}"
 
         packages {
             acquisition_location = "Server"
+            feed = "octopus-server-built-in"
+            package_id = ""
             properties = {
+                PackageParameterName = "template.package"
                 SelectionMode = "deferred"
             }
         }
