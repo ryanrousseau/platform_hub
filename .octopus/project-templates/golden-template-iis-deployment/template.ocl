@@ -1,0 +1,7 @@
+name = "Golden template - IIS Deployment"
+description = ""
+
+icon {
+    color = "#757575"
+    id = "layer-group"
+}
