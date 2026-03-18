@@ -1,0 +1,7 @@
+name = "Golden Template - Argo"
+description = ""
+
+icon {
+    color = "#757575"
+    id = "layer-group"
+}
