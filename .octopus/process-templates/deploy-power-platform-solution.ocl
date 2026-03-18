@@ -88,7 +88,7 @@ step "import-power-platform-solution-v2" {
                 
                 try {
                     # ========================================
-                    # 1. READ CONFIGURATION FROM OCTOPUS VARIABLES
+                    # 3. READ CONFIGURATION FROM OCTOPUS VARIABLES
                     # ========================================
                     Write-Host "Reading Octopus project variables"
                     
