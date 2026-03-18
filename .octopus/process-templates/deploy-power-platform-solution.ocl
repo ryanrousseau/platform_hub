@@ -43,6 +43,7 @@ parameter "Step.PowerPlatform.PackageName" {
         Octopus.ControlType = "Package"
     }
     help_text = ""
+    is_optional = true
     label = "Package Name"
 }
 
@@ -51,6 +52,7 @@ parameter "template.tag" {
         Octopus.ControlType = "TargetTags"
     }
     help_text = ""
+    is_optional = true
     label = "Target tag"
 }
 
@@ -61,6 +63,16 @@ parameter "template.teams.channel" {
     help_text = ""
     is_optional = true
     label = "Teams Channel Name"
+}
+
+parameter "template.account" {
+    display_settings = {
+        Octopus.ControlType = "UsernamePasswordAccount"
+    }
+    help_text = ""
+    label = "Vault account"
+
+    value "vault-credentials" {}
 }
 
 step "import-power-platform-solution-v2" {
