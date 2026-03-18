@@ -27,14 +27,12 @@ step "run-a-script" {
         properties = {
             Octopus.Action.RunOnServer = "true"
             Octopus.Action.Script.ScriptBody = <<-EOT
-                usern=$(get_octopusvariable "template.account.Username")
-                passwo=$(get_octopusvariable "template.account.Password")
+                usern=$(get_octopusvariable "ProcessTemplates[test].template.account.Username")
+                passwo=$(get_octopusvariable "ProcessTemplates[test].template.account.Password")
                 echo "User name: $usern"
                 echo "Password: $passwo"
                 
-                echo "Direct: #{template.account.Username}"
-                
-                echo "Param name only: #{account.Username}"
+                echo "Direct: #{ProcessTemplates[test].template.account.Username}"
                 EOT
             Octopus.Action.Script.ScriptSource = "Inline"
             Octopus.Action.Script.Syntax = "Bash"
