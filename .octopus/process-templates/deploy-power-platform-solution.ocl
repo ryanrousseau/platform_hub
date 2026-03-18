@@ -1,4 +1,4 @@
-name = "Deploy Power Platform Solution"
+name = "Run MF Bash script"
 description = ""
 
 icon {
