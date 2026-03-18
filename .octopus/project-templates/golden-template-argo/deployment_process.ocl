@@ -28,8 +28,9 @@ step "update-argo-cd-application-manifests" {
             repository_uri = "https://github.com/OctopusSolutionsEngineering/demo-app-argo-templates/"
         }
 
-        packages "container-app" {
+        packages "app-container" {
             acquisition_location = "NotAcquired"
+            feed = "octopus-server-built-in"
             package_id = ""
             properties = {
                 Extract = "false"
