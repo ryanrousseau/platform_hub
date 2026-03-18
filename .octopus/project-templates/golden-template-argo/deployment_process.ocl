@@ -1,0 +1,42 @@
+step "update-argo-cd-application-manifests" {
+    name = "Update Argo CD Application Manifests"
+
+    action {
+        action_type = "Octopus.ArgoCDUpdateManifests"
+        properties = {
+            Octopus.Action.ArgoCD.CommitMessageDescription = <<-EOT
+                Project: #{Octopus.Project.Slug}
+                Environment: #{Octopus.Environment.Slug}#{if Octopus.Deployment.Tenant.Slug }
+                Tenant: #{Octopus.Deployment.Tenant.Slug}#{/if}
+                EOT
+            Octopus.Action.ArgoCD.CommitMessageSummary = "Updated Manifests with Release: #{Octopus.Release.Number}"
+            Octopus.Action.ArgoCD.CommitMethod = "DirectCommit"
+            Octopus.Action.ArgoCD.InputPath = "demo-app"
+            Octopus.Action.ArgoCD.StepVerification.Method = "ArgoCDApplicationHealthy"
+            Octopus.Action.ArgoCD.Sync.Mode = "AllEnvironments"
+            Octopus.Action.GitRepository.Source = "External"
+            Octopus.Action.RunOnServer = "true"
+            Octopus.Action.Script.ScriptSource = "GitRepository"
+        }
+        worker_pool_variable = "#{Template.Worker.Pool}"
+
+        git_dependencies {
+            default_branch = "main"
+            file_path_filters = ["demo-app", "demo-app/**/*"]
+            git_credential_id = "GitCredentials-41"
+            git_credential_type = "Library"
+            repository_uri = "https://github.com/OctopusSolutionsEngineering/demo-app-argo-templates/"
+        }
+
+        packages "container-app" {
+            acquisition_location = "NotAcquired"
+            package_id = ""
+            properties = {
+                Extract = "false"
+                PackageParameterName = "Template.Container.Image"
+                Purpose = "DockerImageReference"
+                SelectionMode = "deferred"
+            }
+        }
+    }
+}
