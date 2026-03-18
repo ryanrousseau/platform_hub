@@ -1,0 +1,7 @@
+variable "Project.Database.Name" {
+    value "#{Octopus.Project.Slug}" {}
+}
+
+variable "Project.Application.Image" {
+    value "#{Octopus.Action.Package[app-container].Image}" {}
+}
