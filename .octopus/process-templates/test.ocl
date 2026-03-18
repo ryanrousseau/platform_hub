@@ -1,2 +1,39 @@
 name = "Test"
 description = ""
+
+parameter "template.account" {
+    display_settings = {
+        Octopus.ControlType = "UsernamePasswordAccount"
+    }
+    help_text = ""
+    label = "Account Param"
+
+    value "vault-credentials" {}
+}
+
+parameter "tmp.workerpool" {
+    display_settings = {
+        Octopus.ControlType = "WorkerPool"
+    }
+    help_text = ""
+    label = "Worker pool"
+}
+
+step "run-a-script" {
+    name = "Run a Script"
+
+    action {
+        action_type = "Octopus.Script"
+        properties = {
+            Octopus.Action.RunOnServer = "true"
+            Octopus.Action.Script.ScriptBody = <<-EOT
+                acct=$(get_octopusvariable "template.account")
+                echo $acct.Username
+                EOT
+            Octopus.Action.Script.ScriptSource = "Inline"
+            Octopus.Action.Script.Syntax = "Bash"
+            OctopusUseBundledTooling = "False"
+        }
+        worker_pool_variable = "#{tmp.workerpool}"
+    }
+}
