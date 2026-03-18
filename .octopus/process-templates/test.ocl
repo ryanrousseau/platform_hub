@@ -27,8 +27,10 @@ step "run-a-script" {
         properties = {
             Octopus.Action.RunOnServer = "true"
             Octopus.Action.Script.ScriptBody = <<-EOT
-                acct=$(get_octopusvariable "template.account")
-                echo $acct.Username
+                usern=$(get_octopusvariable "template.account.Username")
+                passwo=$(get_octopusvariable "template.account.Password")
+                echo $usern
+                echo $passwo
                 EOT
             Octopus.Action.Script.ScriptSource = "Inline"
             Octopus.Action.Script.Syntax = "Bash"
