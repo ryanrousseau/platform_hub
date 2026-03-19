@@ -1,5 +1,95 @@
-process_template "run-a-process-template" {
-    name = "Run a Process Template"
+process_template "create-kubernetes-secret" {
+    name = "Create Kubernetes Secret"
     process_template_slug = "create-k8s-secret"
     version_mask = "1.X"
+
+    parameter "Parameter.Secret.Password" {
+        value = "#{Project.Secret.Username}"
+    }
+
+    parameter "Parameter.Secret.Username" {
+        value = "#{Project.Secret.Username}"
+    }
+
+    parameter "Parameter.Kubernetes.Namespace" {
+        value = "#{Octopus.Project.Slug}-#{Octopus.Environment.Slug}"
+    }
+
+    parameter "Parameter.Kubernetes.Secret.Name" {
+        value = "#{Octopus.Project.Slug}-#{Octopus.Environment.Slug}-secret"
+    }
+
+    parameter "Parameter.Target.Tag" {
+        value = "#{Template.Target.Tags}"
+    }
+}
+
+step "deploy-kubernetes-yaml" {
+    name = "Deploy Kubernetes YAML"
+    properties = {
+        Octopus.Action.TargetRoles = "#{Template.Target.Tags}"
+    }
+
+    action {
+        action_type = "Octopus.KubernetesDeployRawYaml"
+        properties = {
+            Octopus.Action.Kubernetes.DeploymentTimeout = "180"
+            Octopus.Action.Kubernetes.ResourceStatusCheck = "True"
+            Octopus.Action.Kubernetes.ServerSideApply.Enabled = "True"
+            Octopus.Action.Kubernetes.ServerSideApply.ForceConflicts = "True"
+            Octopus.Action.KubernetesContainers.CustomResourceYaml = <<-EOT
+                apiVersion: apps/v1
+                kind: Deployment
+                metadata:
+                  name: #{Octopus.Project.Slug}-deployment
+                spec:
+                  replicas: 1
+                  selector:
+                    matchLabels:
+                      component: #{Octopus.Project.Slug}-service
+                  template:
+                    metadata:
+                      labels:
+                        component: #{Octopus.Project.Slug}-service
+                    spec:
+                      containers:
+                        - name: #{Octopus.Project.Slug}
+                          image: #{Project.Application.Image}
+                          ports:
+                            - name: http-route
+                              containerPort: 80
+                          env:
+                            - name: DATABASE_SERVER
+                              value: "#{Project.Database.Server}"
+                            - name: DATABASE_NAME
+                              value: "#{Project.Database.Name}"
+                ---
+                apiVersion: v1
+                kind: Service
+                metadata:
+                  name: #{Octopus.Project.Slug}-service
+                spec:
+                  type: ClusterIP
+                  selector:
+                    component: #{Octopus.Project.Slug}-service
+                  ports:
+                    - port: 80
+                      targetPort: 80
+                EOT
+            Octopus.Action.KubernetesContainers.Namespace = "#{Octopus.Project.Slug}-#{Octopus.Environment.Slug}"
+            Octopus.Action.Script.ScriptSource = "Inline"
+        }
+        worker_pool_variable = "#{Template.Worker.Pool}"
+
+        packages "app-container" {
+            acquisition_location = "NotAcquired"
+            package_id = ""
+            properties = {
+                Extract = "false"
+                PackageParameterName = "Template.Container.Image"
+                Purpose = "DockerImageReference"
+                SelectionMode = "deferred"
+            }
+        }
+    }
 }
