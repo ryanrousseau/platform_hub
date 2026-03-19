@@ -1,5 +1,10 @@
-name = "Test"
+name = "Smoke test service"
 description = ""
+
+icon {
+    color = "#D63D3D"
+    id = "fire-alt"
+}
 
 parameter "template.account" {
     display_settings = {
