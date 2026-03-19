@@ -13,3 +13,11 @@ parameter "Template.Worker.Pool" {
     help_text = ""
     label = "Worker Pool"
 }
+
+parameter "Template.ExecutionContainer.Feed" {
+    display_settings = {
+        Octopus.ControlType = "Feed"
+    }
+    help_text = "Pick Docker Hub"
+    label = "Execution Container Feed"
+}
