@@ -2,6 +2,6 @@ name = "Golden Template - K8s - Yaml"
 description = ""
 
 icon {
-    color = "#757575"
-    id = "layer-group"
+    color = "#927002"
+    id = "traffic-cone"
 }
