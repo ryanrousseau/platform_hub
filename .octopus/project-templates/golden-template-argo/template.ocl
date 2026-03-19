@@ -2,6 +2,6 @@ name = "Golden Template - Argo"
 description = ""
 
 icon {
-    color = "#757575"
-    id = "rocket"
+    color = "#927002"
+    id = "traffic-cone"
 }
