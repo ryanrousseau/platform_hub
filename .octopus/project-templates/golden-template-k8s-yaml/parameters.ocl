@@ -6,22 +6,6 @@ parameter "Template.Container.Image" {
     label = "Container Image"
 }
 
-parameter "Template.Worker.Pool" {
-    display_settings = {
-        Octopus.ControlType = "WorkerPool"
-    }
-    help_text = ""
-    label = "Worker Pool"
-}
-
-parameter "Template.ExecutionContainer.Feed" {
-    display_settings = {
-        Octopus.ControlType = "Feed"
-    }
-    help_text = "Pick Docker Hub"
-    label = "Execution Container Feed"
-}
-
 parameter "Template.Target.Tags" {
     display_settings = {
         Octopus.ControlType = "TargetTags"
