@@ -1,0 +1,11 @@
+variable "Project.Application.Image" {
+    value "#{Octopus.Action.Package[app-container].Image}" {}
+}
+
+variable "Project.Database.Name" {
+    value "#{Octopus.Project.Slug}-db" {}
+}
+
+variable "Project.Database.Server" {
+    value "sf-db-#{Octopus.Environment.Slug}" {}
+}
