@@ -1,6 +1,11 @@
 name = "Golden Helm Template"
 description = "A reusable process template for deploying Helm charts in a standardized and compliant manner. This template includes built-in best practices for versioning, environment targeting, and audit visibility. Ideal for teams adopting GitOps or managing Kubernetes workloads at scale."
 
+icon {
+    color = "#927002"
+    id = "helmet-battle"
+}
+
 parameter "template.kubernetes.target.tag" {
     display_settings = {
         Octopus.ControlType = "TargetTags"
