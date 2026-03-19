@@ -21,3 +21,11 @@ parameter "Template.ExecutionContainer.Feed" {
     help_text = "Pick Docker Hub"
     label = "Execution Container Feed"
 }
+
+parameter "Template.Target.Tags" {
+    display_settings = {
+        Octopus.ControlType = "TargetTags"
+    }
+    help_text = ""
+    label = "Target Tag(s)"
+}
