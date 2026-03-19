@@ -2,6 +2,6 @@ name = "Golden Template - Azure Web App"
 description = ""
 
 icon {
-    color = "#757575"
-    id = "layer-group"
+    color = "#1A77CA"
+    id = "cloud"
 }
